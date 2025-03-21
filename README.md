@@ -81,16 +81,20 @@ s=socket.socket()
 s.bind(('localhost',8000))
 s.listen(5)
 c,addr=s.accept()
+size=int(input("Enter number of frames to send : "))
+l=list(range(size))
+s=int(input("Enter Window Size : "))
+st=0
+i=0
 while True:
- i=input("Enter a data: ")
- c.send(i.encode())
+ while(i<len(l)):
+ st+=s
+ c.send(str(l[i:st]).encode())
  ack=c.recv(1024).decode()
  if ack:
-     print(ack)
-     continue
- else:
-     c.close()
-     break
+    print(ack)
+ i+=s
+
 ```
 Server
 ```
@@ -99,14 +103,13 @@ s=socket.socket()
 s.connect(('localhost',8000))
 while True:
  print(s.recv(1024).decode())
- s.send("Acknowledgement Recived".encode())
+ s.send("acknowledgement recived from the server".encode())
 ```
 ## Output
 
-![1aclient](https://github.com/user-attachments/assets/be193e21-0440-4102-8c4f-de5c0c1f7469)
+![1bclient](https://github.com/user-attachments/assets/1edcb1a6-3fbd-4459-843e-4f55a3e019fb)
 
-![1aserver](https://github.com/user-attachments/assets/e974f682-0aea-4c51-bb24-05d9d11cffab)
-
+![1bserver](https://github.com/user-attachments/assets/9809c3ed-0265-49ee-b5e5-19611dbfbf25)
 
 ## Result:
 
